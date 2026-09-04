@@ -1,0 +1,7 @@
+node_modules
+.git
+Dockerfile
+.dockerignore
+coverage
+jest_html_reporters*
+*.log

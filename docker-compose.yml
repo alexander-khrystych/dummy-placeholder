@@ -1,0 +1,8 @@
+services:
+  dummy-placeholder:
+    build: .
+    image: dummy-placeholder:latest
+    env_file:
+      - .env
+    volumes:
+      - ./html-report:/app/html-report

@@ -1,0 +1,14 @@
+# Dependencies
+node_modules/
+.pnpm*
+*.log
+html-report/
+
+# OS junk
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# IDEs
+.vscode/
+.idea/
