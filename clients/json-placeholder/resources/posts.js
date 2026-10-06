@@ -6,14 +6,23 @@ export default class Posts extends HttpBase {
     }
     
     async getPost({ id, headers }) {
-        return await this.get(`/posts/${id}`, { headers })
+        return await this.request(
+            'GET', `/posts/${id}`,
+            { headers }
+        )
     }
-
-    async create({ body, headers }) {
-        return await this.post('/posts', { body, headers })
+    
+    async create({ headers, data }) {
+        return await this.request(
+            'POST', '/posts/',
+            { headers, data }
+        )
     }
-
-    async edit({ id, body, headers }) {
-        return await this.put(`/posts/${id}`, {body, headers })
+    
+    async edit({ id, headers, data }) {
+        return await this.request(
+            'PUT', `/posts/${id}`,
+            { headers, data }
+        )
     }
 }

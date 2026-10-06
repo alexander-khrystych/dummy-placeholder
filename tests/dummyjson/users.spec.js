@@ -26,7 +26,7 @@ describe('GET /users', () => {
     
     test('"select" only shows selected props on listed users', async () => {
         const selectProps = ['firstName', 'age']
-        const params = { select: _.join(selectProps, ',') }
+        const params = { select: _.join(selectProps, ',') } // 'firstName,age'
         const res = await client.users.getUsers({ params: params })
         expect(res).toHaveStatus(200)
         res.data.users.forEach(user => {
@@ -35,12 +35,14 @@ describe('GET /users', () => {
     })
 
     test('"skip" skips the correct number of users', async () => {
+        // default `limit` req param val is `30`
+        // means 30 users is expected to be in response, with ids in range [11...40]
         const params = { skip: 10 }
         const res = await client.users.getUsers({ params: params })
         expect(res).toHaveStatus(200)
         expect(res.data.skip).toBe(params.skip)
         const allIds = _.map(res.data.users, 'id')
-        const outOfRangeIds = _.filter(allIds, id => id < 11 && id > 41)
+        const outOfRangeIds = _.filter(allIds, id => id < 11 || id > 40)
         expect(outOfRangeIds).toEqual([])
     })
     

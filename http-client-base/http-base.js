@@ -13,29 +13,13 @@ export default class HttpBase {
         })
     }
 
-    async get(path, opts) {
-        return await this.#http.get(
-            path,
-            {
-                headers: opts?.headers,
-                params: opts?.params,
-            }
-        )
-    }
-
-    async post(path, opts) {
-        return await this.#http.post(
-            path,
-            opts.body,
-            { headers: opts.headers },
-        )
-    }
-
-    async put(path, opts) {
-        return await this.#http.put(
-            path,
-            opts.body,
-            { headers: opts.headers },
-        )
+    async request(method, path, opts) {
+        return await this.#http.request({
+            url: path,
+            method: method,
+            params: opts?.params,
+            headers: opts?.headers,
+            data: opts?.data,
+        })
     }
 }

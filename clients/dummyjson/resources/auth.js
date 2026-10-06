@@ -5,11 +5,17 @@ export default class Auth extends HttpBase {
         super(baseUrl, jwt)
     }
 
-    async login({ body, headers }) {
-        return await this.post('/auth/login', { body, headers })
+    async login({ headers, data }) {
+        return await this.request(
+            'POST', '/auth/login', 
+            { headers, data }
+        )
     }
-
-    async getCurrentAuthUser({ headers } = {}) {
-        return await this.get('/auth/me', { headers })
+    
+    async getCurrentAuthUser({ headers }) {
+        return await this.request(
+            'GET', '/auth/me',
+            { headers }
+        )
     }
 }

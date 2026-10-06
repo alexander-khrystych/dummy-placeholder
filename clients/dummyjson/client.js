@@ -17,13 +17,13 @@ export default class DummyJsonClient {
      * with jwt injected into http-base client.
      * Call example:
      * const client = await DummyJsonClient.auth(creds)
-     * await client.users.getCurrentAuthUser() <- returns user details associated with `creds`
+     * await client.auth.getCurrentAuthUser() <- returns user details associated with `creds`
      * @param {*} creds - a valid req body for POST /auth/login
      * @returns 
      */
     static async auth(creds) {
         console.log(JSON.stringify(creds, null, 2))
-        const authRes = await new Auth(process.env.DUMMYJSON_BASE_URL).login({ body: creds })
+        const authRes = await new Auth(this.baseUrl).login({ body: creds })
         return new DummyJsonClient(authRes.data.accessToken)
     }
 }

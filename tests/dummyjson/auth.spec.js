@@ -14,7 +14,7 @@ describe('POST /auth/login', () => {
     })
 
     test('auth with correct credentials returns 200 and tokens', async () => {
-        const res = await client.auth.login({ body: creds() })
+        const res = await client.auth.login({ data: creds() })
         expect(res).toHaveStatus(200)
         expect(res.headers['set-cookie']).toEqual(
             expect.arrayContaining([
@@ -27,7 +27,7 @@ describe('POST /auth/login', () => {
 
     test('received JWT is valid', async () => {
         const userCreds = creds()
-        const res = await client.auth.login({ body: userCreds })
+        const res = await client.auth.login({ data: userCreds })
         expect(res).toHaveStatus(200)
         
         const jwt = res.data.accessToken
@@ -41,13 +41,13 @@ describe('POST /auth/login', () => {
 
     test('auth with incorrect credentials returns 400', async () => {
         const res = await client.auth.login({
-            body: creds({ valid: false }),
+            data: creds({ valid: false }),
         })
         expect(res).toHaveStatus(400)
     })
 
     test.skip('auth token expires after specified time', async () => {
-        const res = await client.auth.login({ body: creds() })
+        const res = await client.auth.login({ data: creds() })
         expect(res).toHaveStatus(200)
         
         await waitFor(61 * 1000)    // wait until jwt expires; expiration can't be set lower than 1 min
@@ -60,13 +60,13 @@ describe('POST /auth/login', () => {
 
     test('expiresInMins negative value returns 400', async () => {
         const res = await client.auth.login({ 
-            body: creds({ valid: true, expiresInMins: -1 }),
+            data: creds({ valid: true, expiresInMins: -1 }),
         })
         expect(res).toHaveStatus(400)
     })
 
     test('200 schema validation', async () => {
-        const res = await client.auth.login({ body: creds() })
+        const res = await client.auth.login({ data: creds() })
         expect(res).toHaveStatus(200)
         const { errors } = validateSchema(schemaPaths.auth.login.POST[200], res.data)
         expect(errors).toBeNull()

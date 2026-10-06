@@ -5,7 +5,10 @@ export default class Users extends HttpBase {
         super(baseUrl)
     }
 
-    async getUsers({ params, headers } = {}) {
-        return await this.get('/users', { params, headers })
+    async getUsers({ headers, params } = {}) {
+        return await this.request(
+            'GET', '/users',
+            { headers, params },
+        )
     }
 }
